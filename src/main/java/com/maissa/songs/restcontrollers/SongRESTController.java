@@ -50,4 +50,9 @@ public class SongRESTController {
 	public List<Song> getSongsByAlbId(@PathVariable("idAlb") Long idAlb) {
 		return songService.findByAlbumIdAlb(idAlb);
 	 }
+	
+	@RequestMapping(value="/sonsByName/{nom}",method = RequestMethod.GET)
+	public List<Song> findByNomSongContains(@PathVariable("nom") String nom) {
+		return songService.findByNomSongContains(nom);
+	}
 }

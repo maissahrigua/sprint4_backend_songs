@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 
+import com.maissa.songs.entities.Album;
 import com.maissa.songs.entities.Song;
 
 @SpringBootApplication
@@ -23,7 +24,7 @@ public class SongsApplication implements CommandLineRunner  {
 	
 	@Override
 	public void run(String... args) throws Exception {
-		repositoryRestConfiguration.exposeIdsFor(Song.class);
+		repositoryRestConfiguration.exposeIdsFor(Song.class,Album.class);
 		
 	}
 
