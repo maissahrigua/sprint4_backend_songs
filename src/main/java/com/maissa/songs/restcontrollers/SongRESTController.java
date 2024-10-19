@@ -2,6 +2,7 @@ package com.maissa.songs.restcontrollers;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,27 +21,28 @@ public class SongRESTController {
 	@Autowired
 	SongService songService;
 	
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(path="all" ,method = RequestMethod.GET)
 	public List<SongDTO> getAllSongs() {
 		return songService.getAllSongs();
 	 } 		
 	
-	@RequestMapping(value="/{id}",method = RequestMethod.GET)
+	@RequestMapping(value="/getbyid/{id}",method = RequestMethod.GET)
 	public SongDTO getSongById(@PathVariable("id") Long id) {	
 		return songService.getSong(id);
     }
 	
-	@RequestMapping(method = RequestMethod.POST)
+	@RequestMapping(value="/addson",method = RequestMethod.POST)
+	//@PreAuthorize("hasAuthority('ADMIN')")
 	public SongDTO createSong(@RequestBody SongDTO songDTO) {
 		return songService.saveSong(songDTO);
 	}
 
-	@RequestMapping(method = RequestMethod.PUT)
+	@RequestMapping(value="/updateson",method = RequestMethod.PUT)
 	public SongDTO updateSong(@RequestBody SongDTO songDTO) {
 		return songService.updateSong(songDTO);
 	}
 
-	@RequestMapping(value="/{id}",method = RequestMethod.DELETE)
+	@RequestMapping(value="/delson/{id}",method = RequestMethod.DELETE)
 	public void deleteSong(@PathVariable("id") Long id)
 	{
 		songService.deleteSongById(id);
