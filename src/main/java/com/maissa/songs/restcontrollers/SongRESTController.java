@@ -21,28 +21,32 @@ public class SongRESTController {
 	@Autowired
 	SongService songService;
 	
-	@RequestMapping(path="all" ,method = RequestMethod.GET)
-	public List<SongDTO> getAllSongs() {
+	@RequestMapping(path="all",method =RequestMethod.GET)
+	public List<Song> getAllSongs() {
 		return songService.getAllSongs();
 	 } 		
 	
 	@RequestMapping(value="/getbyid/{id}",method = RequestMethod.GET)
-	public SongDTO getSongById(@PathVariable("id") Long id) {	
+	//@GetMapping("/getbyid/{id}")
+	public Song getSongById(@PathVariable("id") Long id) {	
 		return songService.getSong(id);
     }
 	
 	@RequestMapping(value="/addson",method = RequestMethod.POST)
-	//@PreAuthorize("hasAuthority('ADMIN')")
-	public SongDTO createSong(@RequestBody SongDTO songDTO) {
-		return songService.saveSong(songDTO);
+	//@PostMapping("/addsond")
+	public Song createSong(@RequestBody Song song) {
+		System.out.println(song);
+		return songService.saveSong(song);
 	}
 
 	@RequestMapping(value="/updateson",method = RequestMethod.PUT)
-	public SongDTO updateSong(@RequestBody SongDTO songDTO) {
-		return songService.updateSong(songDTO);
+	//@PutMapping("/updateson")
+	public Song updateSong(@RequestBody Song song) {
+		return songService.updateSong(song);
 	}
 
 	@RequestMapping(value="/delson/{id}",method = RequestMethod.DELETE)
+	//@DeleteMapping("/delson/{id}")
 	public void deleteSong(@PathVariable("id") Long id)
 	{
 		songService.deleteSongById(id);
@@ -52,9 +56,4 @@ public class SongRESTController {
 	public List<Song> getSongsByAlbId(@PathVariable("idAlb") Long idAlb) {
 		return songService.findByAlbumIdAlb(idAlb);
 	 }
-	
-	@RequestMapping(value="/sonsByName/{nom}",method = RequestMethod.GET)
-	public List<Song> findByNomSongContains(@PathVariable("nom") String nom) {
-		return songService.findByNomSongContains(nom);
-	}
 }

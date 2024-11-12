@@ -8,20 +8,18 @@ import com.maissa.songs.entities.Album;
 
 
 public interface SongService {
-	SongDTO saveSong(SongDTO s);
-	SongDTO getSong(Long id);
-	List<SongDTO> getAllSongs();
-	
-	SongDTO updateSong(SongDTO s);
-	void deleteSong(Song s);
-	void deleteSongById(Long id);
-	List<Song> findByNomSong(String nom);
-	List<Song> findByNomSongContains(String nom);
-	List<Song> findByNomTime (String nom, Double time);
-	List<Song> findByAlbum (Album album);
-	List<Song> findByAlbumIdAlb(Long id);
-	List<Song> findByOrderByNomSongAsc();
-	List<Song> trierSongsNomsTime();
-	SongDTO convertEntityToDto (Song song);
-	Song convertDtoToEntity(SongDTO songDto);
+	Song saveSong(Song s);
+	Song updateSong(Song s);
+	 void deleteSong(Song s);
+     void deleteSongById(Long id);
+     Song getSong(Long id);
+	 List<Song> getAllSongs();
+	 
+	 List<Song> findByNomSong(String nom);
+	 List<Song> findByNomSongContains(String nom);
+	 List<Song> findByNomTime (String nom, Double time);
+	 List<Song> findByAlbum (Album album);
+	 List<Song> findByAlbumIdAlb(Long id);
+	 List<Song> findByOrderByNomSongAsc();
+	 List<Song> trierSongsNomsTime();
 }

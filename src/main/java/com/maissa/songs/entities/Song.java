@@ -1,13 +1,15 @@
 package com.maissa.songs.entities;
 
 import java.util.Date;
-
+import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Song {
@@ -21,6 +23,15 @@ public class Song {
 		
 	@ManyToOne
 	private Album album;
+	
+	private String imagePath;
+
+	/*
+	 * @OneToOne private Image image;
+	 */
+	
+	@OneToMany (mappedBy = "song")
+	 private List<Image> images;
 
 	public Song() {
 		super();
@@ -71,11 +82,27 @@ public class Song {
 				+ ", dateCreation=" + dateCreation + "]";
 	}
 	
-	public Album getCategorie() {
+	public Album getAlbum() {
 		return album;
 	}
-	public void setCategorie(Album album) {
+	public void setAlbum(Album album) {
 		this.album = album;
+	}
+
+	public List<Image> getImages() {
+		return images;
+	}
+
+	public void setImages(List<Image> images) {
+		this.images = images;
+	}
+
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
 	}
 	
 }
