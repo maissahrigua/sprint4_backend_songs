@@ -3,7 +3,9 @@ package com.maissa.songs.restcontrollers;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,4 +58,10 @@ public class SongRESTController {
 	public List<Song> getSongsByAlbId(@PathVariable("idAlb") Long idAlb) {
 		return songService.findByAlbumIdAlb(idAlb);
 	 }
+	
+	@GetMapping("/auth")
+	Authentication getAuth(Authentication auth)
+	{
+	return auth;
+	}
 }

@@ -25,24 +25,23 @@ public class ImageRestController {
 	@Autowired
 	SongService songService;
 	
-	@RequestMapping(value = "/uploadFS/{id}", method = RequestMethod.POST)
-	public void uploadImageFS(@RequestParam("image") MultipartFile file, @PathVariable("id") Long id)
-			throws IOException {
-		Song s = songService.getSong(id);
-		s.setImagePath(id + ".jpg");
-
-		Files.write(Paths.get(System.getProperty("user.home") + "/images/" + s.getImagePath()), file.getBytes());
-		songService.saveSong(s);
-	}
-
-	@RequestMapping(value = "/loadfromFS/{id}" , 
-			 method = RequestMethod.GET,
-			 produces = MediaType.IMAGE_JPEG_VALUE)
-	 public byte[] getImageFS(@PathVariable("id") Long id) throws IOException {
-
-		Song s = songService.getSong(id);
-		 return	 Files.readAllBytes(Paths.get(System.getProperty("user.home")+"/images/"+s.getImagePath()));
-	 }
+	/*
+	 * @RequestMapping(value = "/uploadFS/{id}", method = RequestMethod.POST) public
+	 * void uploadImageFS(@RequestParam("image") MultipartFile
+	 * file, @PathVariable("id") Long id) throws IOException { Song s =
+	 * songService.getSong(id); s.setImagePath(id + ".jpg");
+	 * 
+	 * Files.write(Paths.get(System.getProperty("user.home") + "/images/" +
+	 * s.getImagePath()), file.getBytes()); songService.saveSong(s); }
+	 * 
+	 * @RequestMapping(value = "/loadfromFS/{id}" , method = RequestMethod.GET,
+	 * produces = MediaType.IMAGE_JPEG_VALUE) public byte[]
+	 * getImageFS(@PathVariable("id") Long id) throws IOException {
+	 * 
+	 * Song s = songService.getSong(id); return
+	 * Files.readAllBytes(Paths.get(System.getProperty("user.home")+"/images/"+s.
+	 * getImagePath())); }
+	 */
 	
 	
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)

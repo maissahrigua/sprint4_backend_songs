@@ -3,9 +3,11 @@ package com.maissa.songs.security;
 import java.util.Arrays;
 import java.util.Collections;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -19,6 +21,9 @@ import jakarta.servlet.http.HttpServletRequest;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+	
+	@Autowired
+	KeycloakRoleConverter keycloakRoleConverter;
 	
 	@Bean
 	 public SecurityFilterChain filterChain(HttpSecurity http) throws Exception 
@@ -44,8 +49,20 @@ public class SecurityConfig {
 	 			 }).and()
 	          
 	          	          
-		    .authorizeHttpRequests()
-		    .anyRequest().permitAll();
+	          .authorizeHttpRequests( requests ->
+	          requests.requestMatchers("/api/all/**").permitAll() //.hasAnyAuthority("ADMIN","USER")
+	           .requestMatchers(HttpMethod.GET,"/api/getbyid/**").hasAnyAuthority("ADMIN","USER")
+	           // .requestMatchers(HttpMethod.POST,"/api/addson/**").hasAuthority("ADMIN")
+	           .requestMatchers(HttpMethod.PUT,"/api/updateson/**").hasAuthority("ADMIN")
+	           .requestMatchers(HttpMethod.DELETE,"/api/delson/**").hasAuthority("ADMIN")
+	          .anyRequest().authenticated() )
+	          //.oauth2ResourceServer(rs -> rs.jwt(Customizer.withDefaults()));
+	          .oauth2ResourceServer(ors->ors.jwt(jwt->
+	          jwt.jwtAuthenticationConverter(keycloakRoleConverter)));
+	          
+			/*
+			 * .authorizeHttpRequests() .anyRequest().permitAll();
+			 */
 		    /*.requestMatchers("/api/all/**").hasAnyAuthority("ADMIN","USER")
 		    .requestMatchers("/api/getbyid/**").hasAnyAuthority("ADMIN","USER")
 		    .requestMatchers(HttpMethod.POST,"/api/addson/**").hasAuthority("ADMIN")
